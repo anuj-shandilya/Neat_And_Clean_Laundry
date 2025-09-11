@@ -9,12 +9,16 @@ const transporter = nodemailer.createTransport({
 });
 
 export default async function handler(req, res) {
+    if (req.method === 'GET' && req.url === '/') {
+        // Basic GET route to confirm backend is hosted
+        return res.status(200).json({ message: 'backend hosted' });
+    }
+
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method Not Allowed' });
     }
 
     const { name, email, service, pickupDateTime } = req.body;
-
     if (!name || !email || !service || !pickupDateTime) {
         return res.status(400).json({ error: 'Missing required fields' });
     }
