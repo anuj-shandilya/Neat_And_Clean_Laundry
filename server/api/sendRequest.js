@@ -1,4 +1,4 @@
-import nodemailer from 'nodemailer';
+const nodemailer = require('nodemailer');
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -8,7 +8,7 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
     if (req.method === 'GET' && req.url === '/') {
         return res.status(200).json({ message: 'backend hosted' });
     }
@@ -16,12 +16,12 @@ export default async function handler(req, res) {
         return res.status(405).json({ error: 'Method Not Allowed' });
     }
 
-    // Parse JSON body manually
+    // Manual JSON body parse
     let jsonBody;
     try {
         jsonBody = await new Promise((resolve, reject) => {
             let data = '';
-            req.on('data', chunk => { data += chunk });
+            req.on('data', chunk => { data += chunk; });
             req.on('end', () => resolve(JSON.parse(data)));
             req.on('error', err => reject(err));
         });
@@ -57,4 +57,4 @@ export default async function handler(req, res) {
         console.error('Error sending emails:', error);
         res.status(500).json({ error: 'Failed to send email' });
     }
-}
+};
