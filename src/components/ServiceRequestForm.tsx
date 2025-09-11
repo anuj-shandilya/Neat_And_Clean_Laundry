@@ -32,7 +32,6 @@ const ServiceRequestForm: React.FC = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    // Validate pickup time to be between 9 AM and 9 PM
     const isValidPickupTime = (dateTime: string) => {
         if (!dateTime) return false;
         const date = new Date(dateTime);
@@ -55,11 +54,12 @@ const ServiceRequestForm: React.FC = () => {
 
         setError('');
         try {
-            const response = await fetch('http://localhost:5000/api/send-request', {
+            const response = await fetch('/api/sendRequest', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
             });
+
 
             const data = await response.json();
             if (response.ok) {
@@ -129,12 +129,12 @@ const ServiceRequestForm: React.FC = () => {
                     ))}
                 </select>
 
-                <label className="block mb-1 font-medium" htmlFor="pickupDateTime">Pickup Date & Time (9 AM - 9 PM)</label>
+                <label className="block mb-1 font-medium" htmlFor="pickupDateTime"></label>
                 <input
                     id="pickupDateTime"
                     name="pickupDateTime"
                     type="datetime-local"
-                    step={3600}             // 1 hour step in seconds for time selection
+                    step={3600}
                     min="09:00"
                     max="21:00"
                     value={formData.pickupDateTime}
