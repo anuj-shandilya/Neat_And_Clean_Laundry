@@ -1,6 +1,4 @@
 import nodemailer from 'nodemailer';
-import dotenv from 'dotenv';
-dotenv.config();
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -10,22 +8,15 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-export async function handler(event, context) {
-    if (event.httpMethod !== 'POST') {
-        return {
-            statusCode: 405,
-            headers: { 'Allow': 'POST' },
-            body: JSON.stringify({ error: 'Method Not Allowed' }),
-        };
+export default async function handler(req, res) {
+    if (req.method !== 'POST') {
+        return res.status(405).json({ error: 'Method Not Allowed' });
     }
 
-    const { name, email, service, pickupDateTime } = JSON.parse(event.body);
+    const { name, email, service, pickupDateTime } = req.body;
 
     if (!name || !email || !service || !pickupDateTime) {
-        return {
-            statusCode: 400,
-            body: JSON.stringify({ error: 'Missing required fields' }),
-        };
+        return res.status(400).json({ error: 'Missing required fields' });
     }
 
     const mailOptionsToUser = {
@@ -45,15 +36,9 @@ export async function handler(event, context) {
     try {
         await transporter.sendMail(mailOptionsToUser);
         await transporter.sendMail(mailOptionsToProvider);
-        return {
-            statusCode: 200,
-            body: JSON.stringify({ message: 'Request email sent' }),
-        };
+        res.status(200).json({ message: 'Request email sent' });
     } catch (error) {
         console.error('Error sending emails:', error);
-        return {
-            statusCode: 500,
-            body: JSON.stringify({ error: 'Failed to send email' }),
-        };
+        res.status(500).json({ error: 'Failed to send email' });
     }
 }
