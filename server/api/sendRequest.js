@@ -10,15 +10,27 @@ const transporter = nodemailer.createTransport({
 
 export default async function handler(req, res) {
     if (req.method === 'GET' && req.url === '/') {
-        // Basic GET route to confirm backend is hosted
         return res.status(200).json({ message: 'backend hosted' });
     }
-
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method Not Allowed' });
     }
 
-    const { name, email, service, pickupDateTime } = req.body;
+    // Parse JSON body manually
+    let jsonBody;
+    try {
+        jsonBody = await new Promise((resolve, reject) => {
+            let data = '';
+            req.on('data', chunk => { data += chunk });
+            req.on('end', () => resolve(JSON.parse(data)));
+            req.on('error', err => reject(err));
+        });
+    } catch (err) {
+        return res.status(400).json({ error: 'Invalid JSON body' });
+    }
+
+    const { name, email, service, pickupDateTime } = jsonBody;
+
     if (!name || !email || !service || !pickupDateTime) {
         return res.status(400).json({ error: 'Missing required fields' });
     }
