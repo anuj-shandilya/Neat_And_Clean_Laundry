@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer';
 
 const corsHeaders = {
-    'Access-Control-Allow-Origin': '*', // For development, use your frontend domain in production
+    'Access-Control-Allow-Origin': 'https://neatandcleanlaundry.com', // For development, use your frontend domain in production
     'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
 };
