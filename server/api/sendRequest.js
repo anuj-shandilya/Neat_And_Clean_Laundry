@@ -1,5 +1,11 @@
 import nodemailer from 'nodemailer';
 
+const corsHeaders = {
+    'Access-Control-Allow-Origin': '*', // For development, use your frontend domain in production
+    'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+};
+
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -9,9 +15,18 @@ const transporter = nodemailer.createTransport({
 });
 
 async function handler(req, res) {
+    // Handle CORS preflight request
+    if (req.method === 'OPTIONS') {
+        return res.status(200).set(corsHeaders).end();
+    }
+
+    // Set CORS headers for all other responses
+    res.set(corsHeaders);
+
     if (req.method === 'GET' && req.url === '/') {
         return res.status(200).json({ message: 'backend hosted' });
     }
+
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method Not Allowed' });
     }
@@ -58,4 +73,5 @@ async function handler(req, res) {
         res.status(500).json({ error: 'Failed to send email' });
     }
 };
+
 export default handler;
