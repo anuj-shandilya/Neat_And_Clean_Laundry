@@ -1,4 +1,4 @@
-const nodemailer = require('nodemailer');
+import nodemailer from 'nodemailer';
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -8,7 +8,7 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-module.exports = async function handler(req, res) {
+async function handler(req, res) {
     if (req.method === 'GET' && req.url === '/') {
         return res.status(200).json({ message: 'backend hosted' });
     }
@@ -58,3 +58,4 @@ module.exports = async function handler(req, res) {
         res.status(500).json({ error: 'Failed to send email' });
     }
 };
+export default handler;

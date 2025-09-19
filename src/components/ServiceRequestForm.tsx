@@ -54,7 +54,7 @@ const ServiceRequestForm: React.FC = () => {
 
         setError('');
         try {
-            const response = await fetch('/api/sendRequest', {
+            const response = await fetch('https://neat-and-clean-laundry.vercel.app/api/sendRequest', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
