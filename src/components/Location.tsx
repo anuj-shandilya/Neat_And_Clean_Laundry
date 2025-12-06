@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { MapPin, Phone, Clock } from 'lucide-react';
+import { MapPin, Phone } from 'lucide-react';
+import LocationMapCard from './LocationMapCard';
 
-const serviceAreas = [
-    "Vijay Nagar", "Nehru Nagar", "West Ram Krishna Nagar", "Kautilya Nagar",
+const serviceAreas = ["Vijay Nagar", "Nehru Nagar", "West Ram Krishna Nagar", "Kautilya Nagar",
     "Gulzarbagh", "Kidwaipur Postal Park", "Mahavir Nagar", "Purnendu Nagar",
     "Phulwari Sharif", "Ashokpuri", "Khajpura", "East Indira Nagar",
     "Lal Kothi", "Chajju Bagh", "Shitala Colony", "P C Colony",
@@ -15,8 +15,7 @@ const serviceAreas = [
     "Bank Colony", "East Ram Krishna Nagar", "Ramkrishan Nagar", "Chriyantand",
     "Mithapur", "Rajbansi Nagar", "West Ashok Nagar", "Phulwari Sharif",
     "Sanjay Gandhi Nagar", "Hanuman Nagar", "Engineer's Colony", "Adarsh Nagar",
-    "Ramkrishan Nagar", "Rukanpura"
-];
+    "Ramkrishan Nagar", "Rukanpura"];
 
 const Location: React.FC = () => {
     const [showAllAreas, setShowAllAreas] = useState(false);
@@ -26,28 +25,28 @@ const Location: React.FC = () => {
         <div id="location" className="bg-[#48C9B0] text-white py-20 px-4">
             <div className="max-w-7xl mx-auto">
                 <h2 className="text-4xl font-bold text-center mb-16">Find Us</h2>
-                <div className="grid md:grid-cols-3 gap-8 mb-12">
-                    <div className="text-center">
-                        <MapPin className="w-12 h-12 mx-auto mb-4" />
+                <div className="grid md:grid-cols-3 gap-8 mb-12 items-center">
+                    {/* Address Card */}
+                    <div className="flex flex-col items-center justify-center h-full">
+                        <MapPin className="w-12 h-12 mb-4" />
                         <h3 className="text-xl font-semibold mb-2">Address</h3>
                         <p>AG Colony, Patna</p>
                         <p>Bihar, India</p>
                     </div>
-                    <div className="text-center">
-                        <Phone className="w-12 h-12 mx-auto mb-4" />
+                    {/* Contact Card */}
+                    <div className="flex flex-col items-center justify-center h-full">
+                        <Phone className="w-12 h-12 mb-4" />
                         <h3 className="text-xl font-semibold mb-2">Contact</h3>
                         <p>+91 9304136010</p>
                         <p>info@neatclean.com</p>
                     </div>
-                    <div className="text-center">
-                        <Clock className="w-12 h-12 mx-auto mb-4" />
-                        <h3 className="text-xl font-semibold mb-2">Hours</h3>
-                        <p>Monday - Saturday</p>
-                        <p>8:00 AM - 8:00 PM</p>
+                    {/* Location Map Card */}
+                    <div className="flex flex-col items-center justify-center h-full">
+                        <LocationMapCard />
                     </div>
                 </div>
 
-                {/* Service Areas */}
+                {/* The rest of your component code (Service Areas) remains unchanged */}
                 <div className="mt-16">
                     <h3 className="text-2xl font-bold text-center mb-8">Service Areas</h3>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">

@@ -6,6 +6,7 @@ import Services from './components/Services';
 import WhatsAppButton from './components/WhatsAppButton';
 import Home from './pages/Home';
 import Contact from './pages/Contact';
+import Maps from './components/Maps';
 
 const App: React.FC = () => {
   return (
@@ -17,6 +18,7 @@ const App: React.FC = () => {
             <Route path="/" element={<Home />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/Services" element={<Services />} />
+            <Route path="/maps" element={<Maps />} />
           </Routes>
         </main>
         <Footer />
